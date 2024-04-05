@@ -32,53 +32,67 @@ IConfiguration configuration = new ConfigurationBuilder()
     .Build();
 
 
-string GetOpenAIApiKey() => configuration["OpenAIiKey"] ?? throw new ArgumentException("Could not fetch OpenAPI key!. Make sure it is set either as env var or in appsettings.json");
-
-string GetAzureOpenAIKey() => configuration["AzureOpenAIKey"] ?? throw new ArgumentException("Could not fetch Azure OpenAPI key!. Make sure it is set either as env var or in appsettings.json");
 
 var skAppSettings = configuration.GetSection("SkAppSettings").Get<SkAppSettings>();
 
 try
 {
-    bool useAzureOpenAI = true;
+    ValidateAPIKeys(skAppSettings);
 
     IKernelBuilder builder = Kernel.CreateBuilder();
 
     LogLevel loggingLevel;
 
-    if(!Enum.TryParse(skAppSettings.LoggingLevel, out loggingLevel))
+    if (!Enum.TryParse(skAppSettings.LoggingLevel, out loggingLevel))
     {
-        Console.WriteLine("Could not get log level from appSettings. Setting to Information");
+        Console.WriteLine("Could not get log level from appSettings.json. Setting to Information");
         loggingLevel = LogLevel.Information;
     }
-    Console.WriteLine($"Current Semantic Kernel logging level {loggingLevel}");   
+    Console.WriteLine($"Current Semantic Kernel logging level {loggingLevel}");
+    ConfigureChatCompletion(CompletionModel, skAppSettings, builder, loggingLevel);
 
-    if(useAzureOpenAI) 
-    {
-        Console.WriteLine("Configuring Azure Open AI");
-        builder.Services.AddLogging(c=> c.AddConsole().SetMinimumLevel(loggingLevel))
-                    .AddOpenAIChatCompletion(CompletionModel,GetAzureOpenAIKey());
-
-    }
-    else
-    {
-        builder.Services.AddLogging(c=> c.AddConsole().SetMinimumLevel(loggingLevel))
-                    .AddOpenAIChatCompletion(CompletionModel,GetOpenAIApiKey());
-    }        
-    
-   
-    var kernel =  builder.Build();
+    var kernel = builder.Build();
     var questionFunction = kernel.CreateFunctionFromPrompt(
     "When was {{$language}} {{$version}} released?"
     );
     var result = await questionFunction.InvokeAsync(kernel, new KernelArguments
     {
-    ["language"] = "C#",
-    ["version"] = "5.0",
+        ["language"] = "C#",
+        ["version"] = "5.0",
     });
     Console.WriteLine("Answer: {0}", result.GetValue<string>());
 }
 catch (Exception exception)
 {
     Console.WriteLine($"Oops an error was encountered: {exception.ToString()}");
+}
+
+static void ValidateAPIKeys(SkAppSettings? skAppSettings)
+{
+    if (skAppSettings.UseAzureOpenAI && string.IsNullOrEmpty(skAppSettings.AzureOpenAIKey))
+    {
+        throw new InvalidOperationException("The AzureOpenAIKey is not set in the appsettings.json file.");
+    }
+
+    if (!skAppSettings.UseAzureOpenAI && string.IsNullOrEmpty(skAppSettings.OpenAIKey))
+    {
+        throw new InvalidOperationException("The OpenAIKey is not set in the appsettings.json file.");
+    }
+}
+
+static void ConfigureChatCompletion(string CompletionModel, SkAppSettings? skAppSettings, IKernelBuilder builder, LogLevel loggingLevel)
+{
+    if (skAppSettings.UseAzureOpenAI)
+    {
+        Console.WriteLine("Configuring Azure Open AI Chat completion");
+        builder.Services.AddLogging(c => c.AddConsole().SetMinimumLevel(loggingLevel))
+                    .AddAzureOpenAIChatCompletion(deploymentName:skAppSettings.AzureOpenAIDeploymentName,endpoint:skAppSettings.AzureOpenAIEndPoint,apiKey:skAppSettings.AzureOpenAIKey,modelId:skAppSettings.AzureOpenAIModelId);
+
+    }
+    else
+    {
+        Console.WriteLine("Configuring Open AI Chat completion");
+        builder.Services.AddLogging(c => c.AddConsole().SetMinimumLevel(loggingLevel))
+                    .AddOpenAIChatCompletion(CompletionModel, skAppSettings.OpenAIKey);
+    }
 }
