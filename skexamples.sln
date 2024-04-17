@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E8D6462B-758
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "logging", "src\logging\logging.csproj", "{37BA02AE-5931-4B7C-B1AD-ABD579930ECA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tokencount", "src\tokencount\tokencount.csproj", "{7D39BF07-9838-49D1-BF20-36B76D4F924D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +22,13 @@ Global
 		{37BA02AE-5931-4B7C-B1AD-ABD579930ECA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37BA02AE-5931-4B7C-B1AD-ABD579930ECA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37BA02AE-5931-4B7C-B1AD-ABD579930ECA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D39BF07-9838-49D1-BF20-36B76D4F924D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D39BF07-9838-49D1-BF20-36B76D4F924D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D39BF07-9838-49D1-BF20-36B76D4F924D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D39BF07-9838-49D1-BF20-36B76D4F924D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37BA02AE-5931-4B7C-B1AD-ABD579930ECA} = {E8D6462B-758B-4DA2-BB25-B06EBFE7C554}
+		{7D39BF07-9838-49D1-BF20-36B76D4F924D} = {E8D6462B-758B-4DA2-BB25-B06EBFE7C554}
 	EndGlobalSection
 EndGlobal

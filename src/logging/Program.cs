@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security;
+﻿using logging;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,15 +13,6 @@ Console.WriteLine("Using Open API ...");
 
 Console.WriteLine("Fetching OpenAI Key ");
 
-
-// Addg logging 
-using ILoggerFactory loggerFactory = LoggerFactory.Create(builder =>
-{
-    builder
-        .SetMinimumLevel(LogLevel.Warning)
-        .AddConsole()
-        .AddDebug();
-});
 IConfiguration configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -30,8 +20,6 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddUserSecrets<Program>()
     .AddCommandLine(args)
     .Build();
-
-
 
 var skAppSettings = configuration.GetSection("SkAppSettings").Get<SkAppSettings>();
 
@@ -87,7 +75,6 @@ static void ConfigureChatCompletion(string CompletionModel, SkAppSettings? skApp
         Console.WriteLine("Configuring Azure Open AI Chat completion");
         builder.Services.AddLogging(c => c.AddConsole().SetMinimumLevel(loggingLevel))
                     .AddAzureOpenAIChatCompletion(deploymentName:skAppSettings.AzureOpenAIDeploymentName,endpoint:skAppSettings.AzureOpenAIEndPoint,apiKey:skAppSettings.AzureOpenAIKey,modelId:skAppSettings.AzureOpenAIModelId);
-
     }
     else
     {
