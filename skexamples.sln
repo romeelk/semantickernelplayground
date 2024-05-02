@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "logging", "src\logging\logg
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tokencount", "src\tokencount\tokencount.csproj", "{7D39BF07-9838-49D1-BF20-36B76D4F924D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "builtinplugins", "src\builtinplugins\builtinplugins.csproj", "{B0DE743C-95A5-47BB-8C33-1532B3B057CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,9 +28,18 @@ Global
 		{7D39BF07-9838-49D1-BF20-36B76D4F924D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D39BF07-9838-49D1-BF20-36B76D4F924D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D39BF07-9838-49D1-BF20-36B76D4F924D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2271D16-7381-45C5-955A-71AE3950A857}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2271D16-7381-45C5-955A-71AE3950A857}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2271D16-7381-45C5-955A-71AE3950A857}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2271D16-7381-45C5-955A-71AE3950A857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0DE743C-95A5-47BB-8C33-1532B3B057CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0DE743C-95A5-47BB-8C33-1532B3B057CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0DE743C-95A5-47BB-8C33-1532B3B057CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0DE743C-95A5-47BB-8C33-1532B3B057CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{37BA02AE-5931-4B7C-B1AD-ABD579930ECA} = {E8D6462B-758B-4DA2-BB25-B06EBFE7C554}
 		{7D39BF07-9838-49D1-BF20-36B76D4F924D} = {E8D6462B-758B-4DA2-BB25-B06EBFE7C554}
+		{B0DE743C-95A5-47BB-8C33-1532B3B057CD} = {E8D6462B-758B-4DA2-BB25-B06EBFE7C554}
 	EndGlobalSection
 EndGlobal
