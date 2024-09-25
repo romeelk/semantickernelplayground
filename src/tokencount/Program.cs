@@ -8,7 +8,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 Console.WriteLine("Semantic Kernel token count example");
 
-
 IConfiguration configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
@@ -16,7 +15,7 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddCommandLine(args)
     .Build();
 
-static (string? azoaEndpoint, string? azoaApiKey, string? aoaiModelId, string ? azoaDeployedModel) GetConfig(IConfiguration config)
+static (string? azoaEndpoint, string? azoaApiKey, string? aoaiModelId, string? azoaDeployedModel) GetConfig(IConfiguration config)
 {
     var azoaEndpoint = config["azoaEndpoint"];
     var azoaApikey = config["azoaApiKey"];
@@ -45,8 +44,8 @@ else
 // Setup kernel
 IKernelBuilder kernelBuilder = Kernel.CreateBuilder();
 kernelBuilder.AddAzureOpenAIChatCompletion(deploymentName: azoaDeployedModel, endpoint: azoaEndpoint, apiKey: azoaApikey, modelId: azoaModel);
-  kernelBuilder.Services.AddLogging(c => c.AddConsole().SetMinimumLevel(LogLevel.Information));
-                
+kernelBuilder.Services.AddLogging(c => c.AddConsole().SetMinimumLevel(LogLevel.Information));
+
 var kernel = kernelBuilder.Build();
 
 string skPrompt = """

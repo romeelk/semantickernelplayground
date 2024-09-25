@@ -39,7 +39,7 @@ var kernel = builder.Build();
 await GetDateTimeInfo(kernel);
 await GetConversationTopics(kernel);
 
-var pluginFileToRead = Path.Combine(Environment.CurrentDirectory,"File.txt");
+var pluginFileToRead = Path.Combine(Environment.CurrentDirectory, "File.txt");
 
 await GetFileAndPassToPrompt(kernel, pluginFileToRead);
 // Invoke Time Plugin
@@ -66,15 +66,14 @@ static async Task GetConversationTopics(Kernel kernel)
     Console.WriteLine(result);
 }
 
-
 static async Task GetFileAndPassToPrompt(Kernel kernel, string filename)
 {
     Console.WriteLine("---> Using FilePlugin to read a prompt from a file");
 
-    var fileContents = await kernel.InvokeAsync(nameof(FileIOPlugin), "Read",  new() { { "path", filename } });
+    var fileContents = await kernel.InvokeAsync(nameof(FileIOPlugin), "Read", new() { { "path", filename } });
 
     Console.WriteLine($"File contents: {fileContents}");
 
-    var result  = await kernel.InvokePromptAsync(fileContents.ToString());
+    var result = await kernel.InvokePromptAsync(fileContents.ToString());
     Console.WriteLine($"Result; {result}");
 }
