@@ -34,10 +34,15 @@ builder.Plugins.AddFromType<ConversationSummaryPlugin>();
 
 var kernel = builder.Build();
 
-
-await PromptWithHistory(kernel);
-await PromptTravelPersona(kernel);
-await PromptSystemMessage(kernel);
+try {
+    await PromptWithHistory(kernel);
+    await PromptTravelPersona(kernel);
+    await PromptSystemMessage(kernel);
+}
+catch(Exception exception)
+{
+    System.Console.WriteLine($"Oops an error occured {exception.ToString()}");
+}
 
 static async Task PromptWithHistory(Kernel kernel)
 {
