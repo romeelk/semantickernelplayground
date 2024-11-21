@@ -11,7 +11,7 @@ IConfiguration configuration = new ConfigurationBuilder()
     .AddCommandLine(args)
     .Build();
 
-static (string? azoaEndpoint, string? azoaApiKey, string? aoaiModelId, string ? azoaDeployedModel) GetConfig(IConfiguration config)
+static (string? azoaEndpoint, string? azoaApiKey, string? aoaiModelId, string? azoaDeployedModel) GetConfig(IConfiguration config)
 {
     var azoaEndpoint = config["azoaEndpoint"];
     var azoaApikey = config["azoaApiKey"];
@@ -25,9 +25,9 @@ var (azoaEndpoint, azoaApikey, azoaModel, azoaDeployedModel) = GetConfig(configu
 var builder = Kernel.CreateBuilder();
 builder.Services.AddAzureOpenAIChatCompletion(
     deploymentName: azoaDeployedModel,
-    endpoint:azoaEndpoint,
-    apiKey:azoaApikey,
-    modelId:azoaModel);
+    endpoint: azoaEndpoint,
+    apiKey: azoaApikey,
+    modelId: azoaModel);
 
 builder.Plugins.AddFromType<TimePlugin>();
 builder.Plugins.AddFromType<ConversationSummaryPlugin>();
@@ -64,7 +64,7 @@ static async Task PromptWithHistory(Kernel kernel)
     Begin with: 'Here are some statments in ${language} 
     you may find helpful:' 
     and end with: 'I hope this helps you Python Learning'";
-    
+
     Console.WriteLine($"Prompt history: {history}");
     Console.WriteLine($"Prompt:{prompt}");
     var result = await kernel.InvokePromptAsync(prompt);
